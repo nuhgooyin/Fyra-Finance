@@ -1,0 +1,8 @@
+{
+    "liveshare.allowGuestTaskControl": true,
+    "liveshare.allowGuestDebugControl": true,
+    "liveshare.anonymousGuestApproval": "accept",
+    "liveshare.allowInvites": "all",
+    "liveshare.increasedGuestLimit": false,
+    "jupyter.jupyterServerType": "local"
+}

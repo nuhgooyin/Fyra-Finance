@@ -1,4 +1,4 @@
-# Compounding Interest Calculator (MD)
+# Compounding Interest Calculator MD
 # Formula: final amount = (initial balance) * (1 + interest rate / # compounding periods) ^ (# compounding periods * time period elapsed)
 def compoundInterest(principle, interestPercent, period, time):
 
