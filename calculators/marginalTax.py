@@ -1,4 +1,5 @@
 # Marginal Tax Calculator MD
+# Calculates marginal tax bracket category and rates
 # Initializing 
 import math
 
@@ -7,6 +8,8 @@ import math
 marginal_income_tax_ontario = [[0.050, 45142], [0.0915, 45145], [0.1116, 59713], [0.1216,70000], [0.1316,math.inf]]
 # Federal income tax bracket
 marginal_income_tax_federal = [[0.15, 49020], [0.2050, 49020], [0.26, 53938], [0.2932, 64533], [0.33, math.inf]]
+# Ontario land transfer tax
+marginal_land_transfer_tax_ON = [[0.005, 55000], [0.01, 200000], [0.015, 150000], [0.02, 1600000], [0.025, math.inf]]
 
 # Function
 def marginalTaxCalc(amount, bracket):

@@ -2,12 +2,17 @@
 # Includes different account plans characteristics (contribution limit/room, account balance, penalties, etc.)
 # Serves as base/ground framework for various investment options
 
+# Imports
 import math
+from calculators.compoundInterestCalc import compoundInterest
+from calculators.marginalTax import marginalTaxCalc
+from specificTemplates import TFSA
+from specificTemplates import RESP
 
 # Financial account default template
 class FinancialAccountTemplate():
     def __init__(self, taxRate, contributionRoom, roomPenalty, accountBalance, extraAmount, withdrawAmount, depositedAmount):
-        
+
         # Default values
         self.tax = taxRate
         self.contributionLimit = contributionRoom
@@ -34,18 +39,36 @@ class FinancialAccountTemplate():
     # How much in penalties one must pay
     def penaltyAccrued(self):
         pass
+
+    # What account type
     def accountType(self):
-        pass
+        
+        # Default account type is TFSA
+        accountType = 0
+
+        # Determine account type
+        if accountType == 0:
+            tfsa = TFSA()
+        elif accountType == 1:
+            resp = RESP()
 
     # Calculate withdrawal
     def withdraw(self):
 
-        # 
+        # Not withdrawing more than what is in your account
         if self.AmountInAccount - self.withdrawalAmount >= 0:
+            
+            # Order goes through
             self.AmountInAccount -= self.withdrawalAmount
 
-        if 
-        self.withdrawalAmount -= self.contributionLimit
+            # Updates contribution limit
+            self.withdrawalAmount += self.contributionLimit
+        
+        # Withdrawing more than what is in your account
+        else:
+
+            # Order is halted error message displayed
+            print("Insufficient funds.")
 
     # Calculate deposit 
     def deposit(self):
@@ -53,18 +76,3 @@ class FinancialAccountTemplate():
         # Add deposit amount to account balance and contribution limit
         self.depositAmount += self.AmountInAccount
         self.depositAmount += self.contributionLimit
-
-# TFSA Class
-class TFSA(FinancialAccountTemplate):
-    def __init__(self):
-        FinancialAccountTemplate.__init__(self, 0, 6000, 0.01, 0, 0, 0, 0)
-
-# RESP Class
-class RESP(FinancialAccountTemplate):
-    def __init__(self):
-        FinancialAccountTemplate.__init__(self, 0, math.inf, 0, 0, 0, 0, 0)
-    
-    # RESP total amount calculator
-    def finalAmountRESP(yearlyDep, startingYear):
-        yearsLeft = 17 - startingYear
-
