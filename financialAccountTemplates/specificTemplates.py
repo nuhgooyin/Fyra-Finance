@@ -1,11 +1,9 @@
-# Financial plans and accounts module
+# Specific financial plans and accounts module
 # Includes different account plans characteristics (contribution limit/room, account balance, penalties, etc.)
 # Serves as base/ground framework for various investment options
 
 # Imports
 import math
-from calculators.compoundInterestCalc import compoundInterest
-from calculators.marginalTax import marginalTaxCalc
 from baseTemplate import FinancialAccountTemplate
 
 # TFSA Class
@@ -40,3 +38,29 @@ class RESP(FinancialAccountTemplate):
             govAmount = 0
         
         return totalRESPamount
+
+# RRSP Class
+class RRSP(FinancialAccountTemplate):
+    def __init__(self):
+        FinancialAccountTemplate.__init__(self, 0, 0, 0.01, 0, 0, 0, 0)
+
+    # Method for contribution limit 
+    def contributionLimitCalc(self, previousTax):
+
+        # current contribution limit is 18% of last year's income
+        currentContrLimit = 0
+        currentContrLimit = previousTax * 0.18
+
+        # Up to a max of $27,830
+        if currentContrLimit > 27830:
+            currentContrLimit = 27830
+
+        # Roll-over contribution 
+        self.contributionLimit += currentContrLimit
+
+# RRIF Class
+class RRIF(FinancialAccountTemplate):
+    def __init__(self):
+        FinancialAccountTemplate.__init__(self, 0, 0, 0.01, 0, 0, 0, 0)
+
+# Non-registered Class

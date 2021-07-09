@@ -1,13 +1,9 @@
-# Financial plans and accounts module
+# Base financial plans and accounts template (parent class)
 # Includes different account plans characteristics (contribution limit/room, account balance, penalties, etc.)
 # Serves as base/ground framework for various investment options
 
 # Imports
 import math
-from calculators.compoundInterestCalc import compoundInterest
-from calculators.marginalTax import marginalTaxCalc
-from specificTemplates import TFSA
-from specificTemplates import RESP
 
 # Financial account default template
 class FinancialAccountTemplate():
@@ -23,46 +19,45 @@ class FinancialAccountTemplate():
         self.depositAmount = depositedAmount
     
     # Get excess amount in relation to contribution limit
-    def excessAmount(self):
-        excessAmount = 0
-        self.excessAmount = excessAmount
+    def calcExcess(self, accountBalance, contributionRoom, extraAmount):
 
         # Amount in account is equal or over the contribution limit
-        if self.AmountInAccount >= self.contributionLimit:
+        if accountBalance >= contributionRoom:
             
             # Excess amount is difference in accountbalance and contribution limit
-            excessAmount = self.AmountInAccount - self.contributionLimit
+            extraAmount = accountBalance - contributionRoom
         
         # Return total excess amount
-        return excessAmount
+        return extraAmount
 
     # How much in penalties one must pay
-    def penaltyAccrued(self):
-        pass
-
-    # What account type
-    def accountType(self):
+    def penaltyAccrued(self, roomPenalty, accountBalance, extraAmount):
+        baseTemplate = FinancialAccountTemplate()
+        amountTakenAway = 0
         
-        # Default account type is TFSA
-        accountType = 0
+        # Return calculated excess amount
+        baseTemplate.calcExcess()
 
-        # Determine account type
-        if accountType == 0:
-            tfsa = TFSA()
-        elif accountType == 1:
-            resp = RESP()
+        # Determine amount to take away
+        amountTakenAway = extraAmount * roomPenalty
+
+        # Take away the amount
+        accountBalance -= amountTakenAway
+
+        # Return amount of penalties taken away
+        return amountTakenAway
 
     # Calculate withdrawal
-    def withdraw(self):
+    def withdraw(self, withdrawAmount, accountBalance, contributionRoom):
 
         # Not withdrawing more than what is in your account
-        if self.AmountInAccount - self.withdrawalAmount >= 0:
+        if accountBalance- withdrawAmount >= 0:
             
             # Order goes through
-            self.AmountInAccount -= self.withdrawalAmount
+            accountBalance -= withdrawAmount
 
             # Updates contribution limit
-            self.withdrawalAmount += self.contributionLimit
+            withdrawAmount += contributionRoom
         
         # Withdrawing more than what is in your account
         else:
@@ -71,8 +66,8 @@ class FinancialAccountTemplate():
             print("Insufficient funds.")
 
     # Calculate deposit 
-    def deposit(self):
+    def deposit(self, depositedAmount, accountBalance, contributionRoom):
 
         # Add deposit amount to account balance and contribution limit
-        self.depositAmount += self.AmountInAccount
-        self.depositAmount += self.contributionLimit
+        depositedAmount += accountBalance
+        depositedAmount += contributionRoom
