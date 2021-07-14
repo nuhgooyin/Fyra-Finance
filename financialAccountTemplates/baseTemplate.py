@@ -19,19 +19,19 @@ class FinancialAccountTemplate():
         self.depositAmount = depositedAmount
     
     # Get excess amount in relation to contribution limit
-    def calcExcess(self, accountBalance, contributionRoom, extraAmount):
+    def calcExcess(self):
 
         # Amount in account is equal or over the contribution limit
-        if accountBalance >= contributionRoom:
+        if self.AmountInAccount >= self.contributionLimit:
             
             # Excess amount is difference in accountbalance and contribution limit
-            extraAmount = accountBalance - contributionRoom
+            extraAmount = self.AmountInAccount - self.contributionLimit
         
         # Return total excess amount
         return extraAmount
 
     # How much in penalties one must pay
-    def penaltyAccrued(self, roomPenalty, accountBalance, extraAmount):
+    def penaltyAccrued(self):
         baseTemplate = FinancialAccountTemplate()
         amountTakenAway = 0
         
@@ -39,25 +39,22 @@ class FinancialAccountTemplate():
         baseTemplate.calcExcess()
 
         # Determine amount to take away
-        amountTakenAway = extraAmount * roomPenalty
+        amountTakenAway = self.excessAmount * self.contributionLimitPenalty
 
         # Take away the amount
-        accountBalance -= amountTakenAway
+        self.AmountInAccount -= amountTakenAway
 
         # Return amount of penalties taken away
         return amountTakenAway
 
     # Calculate withdrawal
-    def withdraw(self, withdrawAmount, accountBalance, contributionRoom):
+    def withdraw(self):
 
         # Not withdrawing more than what is in your account
-        if accountBalance- withdrawAmount >= 0:
+        if self.AmountInAccount- self.withdrawalAmount >= 0:
             
             # Order goes through
-            accountBalance -= withdrawAmount
-
-            # Updates contribution limit
-            withdrawAmount += contributionRoom
+            self.AmountInAccount -= self.withdrawalAmount
         
         # Withdrawing more than what is in your account
         else:
@@ -66,8 +63,10 @@ class FinancialAccountTemplate():
             print("Insufficient funds.")
 
     # Calculate deposit 
-    def deposit(self, depositedAmount, accountBalance, contributionRoom):
+    def deposit(self):
 
         # Add deposit amount to account balance and contribution limit
-        depositedAmount += accountBalance
-        depositedAmount += contributionRoom
+        self.depositAmount += self.AmountInAccount
+        self.depositAmount += self.contributionLimit
+
+    
