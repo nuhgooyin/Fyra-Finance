@@ -61,7 +61,7 @@ class RRSP(FinancialAccountTemplate):
         if currentContrLimit > 27830:
             currentContrLimit = 27830
 
-        # Roll-over contribution 
+        # Update and roll-over contribution 
         self.contributionLimit += currentContrLimit
 
 # RRIF Class
@@ -104,12 +104,30 @@ class RRIF(FinancialAccountTemplate):
     def requiredWithdraw(self, age):
         
         # Under 71
+        # Use formula
         if age < 71:
             # Determines required withdrawal percent and amount
             reqWpercent = 1/(90-age)
             reqWamount = reqWpercent * self.AmountInAccount
+        
+        # Over 71
+        # Use table
+        elif age < 96:
+            # Getting correct value from table
+            i = age - 71
+
+            # Determine required withdrawal percent and amount
+            reqWpercent = self.withdrawalAmount[i][1] / 100
+            reqWamount = reqWpercent * self.AmountInAccount
+
+        # Over 95, 20% flat rate
         else:
-            pass
+            # Determine required withdrawal percent and amount
+            reqWpercent = 0.2
+            reqWamount = reqWpercent * self.AmountInAccount
+
+        return reqWamount
+            
 
        
 # Non-registered Class
