@@ -7,18 +7,24 @@ def paymentCalcMortgage(price, downpayment, amorPeriod, rate, freq):
     # Amount owed at start
     amount = price - (price * downpayment)
 
+    # Monthly payment
     if freq == "monthly":
-        # Montly payment
+
+        # How manyh total payments
         n = amorPeriod * 12
+
+        # Amount per payment
         m = (amount * (rate/12) * (1 + rate)**n) / ((1 + rate)**n -1)
 
+    # Bi-weekly payment
     elif freq == "bi-weekly":
-        # Every 2 weeks
+        
+        # How manyh total payments
         n = amorPeriod * 24
+
+        # Amount per payment
         m = (amount * (rate/24) * (1 + rate)**n) / ((1 + rate)**n -1)
 
     return m
 
-
-
-print(paymentCalcMortgage(300000, 0, 30, 0.05, "monthly"))    
+print(paymentCalcMortgage(300000, 0, 30, 0.05, "monthly"))
