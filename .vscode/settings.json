@@ -4,5 +4,6 @@
     "liveshare.anonymousGuestApproval": "accept",
     "liveshare.allowInvites": "all",
     "liveshare.increasedGuestLimit": false,
-    "jupyter.jupyterServerType": "local"
+    "jupyter.jupyterServerType": "local",
+    "git.ignoreLimitWarning": true
 }

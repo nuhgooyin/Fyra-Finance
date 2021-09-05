@@ -5,7 +5,8 @@ from compoundInterestCalc import compoundInterest
 
 # Function that returns how many withdrawals can be made
 # FURTHER IMPROVEMENTS / CHANGES NECESSARY 
-# (maybe a whole section on its own, with visual elements and more outputs, i.e graphs, charts, etc...)
+# (maybe website has a whole section on its own, with visual elements and more outputs, i.e graphs, charts, etc...)
+
 def periodicWithdrawalCalc(principle, interestDec, numCompoundingPeriods, withdrawalAmount, withDrawalsPerPeriod):
     # Initial variables
     amount = principle
@@ -34,12 +35,9 @@ def periodicWithdrawalCalc(principle, interestDec, numCompoundingPeriods, withdr
         else:
             i = 1
         
-
-    return numWithdraw
-
-
-    
-    # until money runs out OR return average increases
+        # Need to determine if amount of money will increase or decrease in long run
+        # If increase return average increase amount
+        # If decrease return how many periods can withdraw for
 
 
 
